@@ -18,7 +18,7 @@ password_hash	VARCHAR(255)	Hashed password for user authentication.
 role	ENUM('donor', 'collector', 'admin')	Role of the user in the system.
 created_at	DATETIME	Timestamp when the user account was created.
 updated_at	DATETIME	Timestamp of the last update to the user account.
-2. Food Items Table
+3. Food Items Table
 Column Name	Data Type	Description
 food_item_id	INT	Unique identifier for each food item (Primary Key).
 donor_id	INT	Foreign key referencing the user_id of the donor.
@@ -27,7 +27,7 @@ quantity	INT	Quantity of the food item available for donation.
 expiration_date	DATE	Expiration date of the food item.
 created_at	DATETIME	Timestamp when the food item was listed.
 updated_at	DATETIME	Timestamp of the last update to the food item listing.
-3. Donations Table
+4. Donations Table
 Column Name	Data Type	Description
 donation_id	INT	Unique identifier for each donation (Primary Key).
 food_item_id	INT	Foreign key referencing the food_item_id of the donated food.
@@ -36,7 +36,7 @@ collector_id	INT	Foreign key referencing the user_id of the collector (if applic
 donation_status	ENUM('pending', 'collected')	Status of the donation.
 created_at	DATETIME	Timestamp when the donation was made.
 updated_at	DATETIME	Timestamp of the last update to the donation record.
-4. Collection Events Table
+5. Collection Events Table
 Column Name	Data Type	Description
 event_id	INT	Unique identifier for each collection event (Primary Key).
 collector_id	INT	Foreign key referencing the user_id of the collector.
