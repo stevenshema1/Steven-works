@@ -11,13 +11,20 @@ create user 'shemasteven'@'localhost' identified by '2401000569';
 --  grant him all permisions on database  FoodWasteManagement
 grant all privileges on FoodWasteManagement.* to 'shemasteven'@'localhost';
 
+-- Refresh Privilages
+
 FLUSH PRIVILEGES;
+
+-- Create table Users
+
 CREATE TABLE Users (
     UserID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(50),
     Email VARCHAR(100),
     Role ENUM('Donor', 'Collector', 'Admin')
 );
+
+-- Create table Food Items
 
 CREATE TABLE FoodItems (
     FoodItemID INT PRIMARY KEY AUTO_INCREMENT,
@@ -27,6 +34,8 @@ CREATE TABLE FoodItems (
     DonorUserID INT,
     FOREIGN KEY (DonorUserID) REFERENCES Users(UserID)
 );
+
+-- Create table Donations
 
 CREATE TABLE Donations (
     DonationID INT PRIMARY KEY AUTO_INCREMENT,
@@ -38,11 +47,15 @@ CREATE TABLE Donations (
     FOREIGN KEY (DonorUserID) REFERENCES Users(UserID)
 );
 
+-- Create table Collectors
+
 CREATE TABLE Collectors (
     CollectorID INT PRIMARY KEY AUTO_INCREMENT,
     CollectorName VARCHAR(100),
     ContactInfo VARCHAR(100)
 );
+
+-- Create table CollectEvents
 
 CREATE TABLE CollectEvents (
     CollectEventID INT PRIMARY KEY AUTO_INCREMENT,
@@ -54,26 +67,31 @@ CREATE TABLE CollectEvents (
 );
 
 
--- Insert Users
+-- Insert Users Table
+
 INSERT INTO Users (Username, Email, Role) VALUES ('shema', 'shema@gmail.com', 'Donor');
 INSERT INTO Users (Username, Email, Role) VALUES ('steven', 'steven@ddg.com', 'Collector');
 INSERT INTO Users (Username, Email, Role) VALUES ('Charlie', 'charlie@yahoo.com', 'Admin');
 
--- Insert Food Items
+-- Insert Food Items Table
+
 INSERT INTO FoodItems (FoodName, ExpirationDate, Quantity, DonorUserID) VALUES ('Apples', '2023-12-01', 100, 1);
 INSERT INTO FoodItems (FoodName, ExpirationDate, Quantity, DonorUserID) VALUES ('Bread', '2023-11-15', 50, 1);
 INSERT INTO FoodItems (FoodName, ExpirationDate, Quantity, DonorUserID) VALUES ('Milk', '2023-10-28', 20, 1);
 
--- Insert Donations
+-- Insert Donations Table
+
 INSERT INTO Donations (FoodItemID, DonorUserID, DateDonated, Status) VALUES (1, 1, CURDATE(), 'Pending');
 INSERT INTO Donations (FoodItemID, DonorUserID, DateDonated, Status) VALUES (2, 1, CURDATE(), 'Pending');
 INSERT INTO Donations (FoodItemID, DonorUserID, DateDonated, Status) VALUES (3, 1, CURDATE(), 'Pending');
 
--- Insert Collectors
+-- Insert Collectors Table
+
 INSERT INTO Collectors (CollectorName, ContactInfo) VALUES ('Food Bank', '1234567890');
 INSERT INTO Collectors (CollectorName, ContactInfo) VALUES ('Local Charity', '0987654321');
 
--- Insert Collect Events
+-- Insert Collect Events Table
+
 INSERT INTO CollectEvents (DonationID, CollectorID, DateCollected) VALUES (1, 1, '2023-10-01');
 
 -- Create Triggers
@@ -104,7 +122,7 @@ CALL GetDonationsByStatus('Pending');
 SELECT * FROM DonationOverview;
 
 
--- Create View
+-- Create View DonationOverview
 
 CREATE VIEW DonationOverview AS
 SELECT d.DonationID, f.FoodName, u.Username, d.DateDonated, d.Status
